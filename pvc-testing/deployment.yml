@@ -28,4 +28,4 @@ metadata:
     volumes:
     - name: longhorn-vol
       persistentVolumeClaim:
-        claimName: longhorn-pvc
+        claimName: longhorn-pvc-2
