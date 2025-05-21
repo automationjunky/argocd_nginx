@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: longhorn-pvc-2
+  namespace: testingpvcs
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    storageClassName: longhorn
+    resources:
+      requests:
+        storage: 2Gi
+  ---
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: volume-tester2
+    namespace: testingpvcs
+  spec:
+    containers:
+    - name: busybox
+      image: busybox
+      command: ["/bin/sh"]
+      args: ["-c", "while true; do sleep 3600; done"]
+      volumeMounts:
+      - mountPath: "/mnt/volume"
+        name: longhorn-vol
+    volumes:
+    - name: longhorn-vol
+      persistentVolumeClaim:
+        claimName: longhorn-pvc
